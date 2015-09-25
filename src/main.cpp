@@ -1,7 +1,8 @@
-// helloworld.cpp
+// main.cpp
 
 #include <iostream>
-#include <SQLiteCpp/SQLiteCpp.h>
+#include <sqlite3.h>
+//#include <SQLiteCpp/SQLiteCpp.h>
 
 using namespace std;
 
@@ -9,6 +10,24 @@ int main(void) {
 
     cout << "Hello World" << endl;
 
+    // vanilla sqlite3 commands
+    // open the database, create it if necessary
+
+    
+    sqlite3 *db;
+    std::string path = "./todo.db";
+    int rc = sqlite3_open_v2(path.c_str(), &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL);
+    if(rc){
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return(1);
+    } else {
+        cout << "db connected" << endl;
+    }
+    
+
+
+    /*
     // trying SQLiteCPP
     try
     {
@@ -37,6 +56,7 @@ int main(void) {
     {
         std::cout << "exception: " << e.what() << std::endl;
     }
+    */
     
     return(0);
 
